@@ -1,4 +1,5 @@
 function [] = turnLeft(pos_body,pos_head,vec,per,t)
+if t<5
 new_vec=vec*[cosd(24) sind(24); -sind(24) cos(24)];
 p_turn_terminate=2;
 for i = 0:t

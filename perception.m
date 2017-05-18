@@ -1,3 +1,3 @@
-function [ p ] = perception(pos_head)
+function [ p ] = perception()
 p=(rand*2)-1;
 end

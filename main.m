@@ -4,6 +4,6 @@ x_head=x_body+x_vec; y_head=y_body+y_vec; pos_head=[x_head y_head];
 x_tail=x_body-x_vec; y_tail=y_body-y_vec; pos_tail=[x_tail y_tail];
 initCon=rand;
 %run(pos_body,pos_head,pos_tail,vec,initCon,0,0)
-turnLeft(pos_body,pos_head,pos_tail,vec,initCon,0,0)
+turnLeft(pos_body,pos_head,pos_tail,vec,initCon,0,0,0)
 
 

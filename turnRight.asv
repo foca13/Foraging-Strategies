@@ -1,10 +1,9 @@
-function [] = turnRight(pos_body,pos_head,pos_tail,vec,per,t_turn,t)
+function [] = turnRight(pos_body,pos_head,pos_tail,vec,per,c,t_turn,t)
 p=perception();
 tail_vec=pos_body-pos_tail;
-%angle=acosd((pos_body(1)*pos_tail(1)+pos_body(2)*pos_tail(2))/(sqrt(pos_body(1)^2+pos_body(2)^2)*srqt(pos_tail(1)^2+pos_tail(2)^2)));
 angle=acosd(dot(vec,tail_vec)/(norm(vec)*norm(tail_vec)));
 if angle <= -119
-    turnLeft(pos_body,pos_head,pos_tail,vec,per,t_turn,t);
+    turnLeft(pos_body,pos_head,pos_tail,vec,per,0,t_turn,t);
 end
 new_vec=vec*[cosd(-24) sind(-24); -sind(-24) cosd(-24)];
 pos_head=pos_body+new_vec;
@@ -21,9 +20,11 @@ p_turn_terminate=r_turn_terminate*0.1;
 plot(plot_kernal,t)
 per=cat(2,per,p);
 t=t+1;
+t_turn=t_turn+1;
+c=c+1;
 %turnLeft(pos_body,pos_head,new_vec,per,t_turn,t);
-if 0.5>p_turn_terminate
-    turnLeft(pos_body,pos_head,new_vec,per,0,t);
+if 20>p_turn_terminate
+    turnRight(pos_body,pos_head,new_vec,per,c,t_turn,t);
 end
 
 %if rand>p_turn_terminate

@@ -22,7 +22,7 @@ t=t+1;
 t
 if rand>p_run_terminate && t_run>10
     run(pos_body,pos_head,pos_tail,vec,per,t_run,t);
-%else turnLeft(pos_body,pos_head,pos_tail,vec,per,0,t);
+%else turnLeft(pos_body,pos_head,pos_tail,vec,per,0,0,t);
 %else if rand<0.5
        % turnLeft(x,y,xVec,yVec,per(t),0);
   %  else turnRight();

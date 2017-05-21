@@ -1,8 +1,7 @@
-function [] = turnLeft(pos_body,pos_head,pos_tail,vec,per,c,t_turn,t)
-tail_vec=pos_body-pos_tail;
+function [] = turnLeft(pos_body,pos_head,vec_tail,vec,per,c,t_turn,t)
 p=perception();
 if c<=5
-angle=acosd(dot(vec,tail_vec)/(norm(vec)*norm(tail_vec)));
+angle=acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
 new_vec=vec*[cosd(24) sind(24); -sind(24) cosd(24)];
 pos_head=pos_body+new_vec;
 turn_terminate_base=2;
@@ -20,7 +19,7 @@ t=t+1;
 t_turn=t_turn+1;
 c=c+1;
 if 20>p_turn_terminate
-    turnLeft(pos_body,pos_head,pos_tail,new_vec,per,c,t_turn,t);
+    turnLeft(pos_body,pos_head,vec_tail,new_vec,per,c,t_turn,t);
 end
 %plot(plot_kernal,t)
 %if angle>37 && rand<p_turn_terminate
@@ -28,16 +27,16 @@ end
 %end
 else if c<=11
     new_vec=vec*[cosd(-24) sind(-24); -sind(-24) cosd(-24)];
-    angle=acosd(dot(vec,tail_vec)/(norm(vec)*norm(tail_vec)));
+    angle=acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
     pos_head=pos_body+new_vec;
     per=cat(2,per,p);
     t=t+1;
     t_turn=t_turn+1;
     c=c+1;
-    turnLeft(pos_body,pos_head,pos_tail,new_vec,per,c,t_turn,t);
+    turnLeft(pos_body,pos_head,vec_tail,new_vec,per,c,t_turn,t);
     else
-        angle=acosd(dot(vec,tail_vec)/(norm(vec)*norm(tail_vec)));
-        turn(pos_body,pos_head,pos_tail,vec,per,t_turn,t);
+        angle=acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
+        turn(pos_body,pos_head,vec_tail,vec,per,t_turn,t);
     end
 end
 %turnLeft(pos_body,pos_head,new_vec,per,t_turn,t);

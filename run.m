@@ -14,8 +14,6 @@ if w==0 && rand>0.1
         w=w+1;
 end
 
-angle = acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
-
 if w == 1 && angle<abs(20)
     if rand<0.5
         new_vec=vec*[cosd(6) sind(6); -sind(6) cosd(6)];

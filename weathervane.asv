@@ -1,0 +1,6 @@
+function [] = weathervane(pos_body,pos_head,vec_tail,vec,perception,t_weathervane,t)
+new_vec=vec*[cosd(6) sind(6); -sind(6) cosd(6)];
+angle=acosd(dot(vec,vec_tail)/(norm(new_vec)*norm(vec_tail)));
+
+end
+

@@ -1,18 +1,18 @@
-function [ p ] = perception(arena,pos_head,prev_con)
-%arena=concentration(65,100);
+function [ p ] = perception(pos_head,prev_con)
 x=abs(floor(pos_head(1)));
 y=abs(floor(pos_head(2)));
-if x<0
+a=getGlobalx;
+if x<1
     x=1;
 end
-if x>100
-    x=100;
+if x>650
+    x=650;
 end
-if y<0
+if y<1
     y=1;
 end
-if y>100
-    y=100;
+if y>1000
+    y=1000;
 end
-p=(arena(x,y)-prev_con);
+p=(1/a(x,y))*(a(x,y)-prev_con);
 end

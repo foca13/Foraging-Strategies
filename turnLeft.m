@@ -1,11 +1,14 @@
-function [] = turnLeft(arena,pos_body,pos_head,vec_tail,vec,con,per,c,t_turn,t)
-if c<=4
+function [] = turnLeft(pos_body,pos_head,vec_tail,vec,con,per,t_turn,t)
+a=getGlobalx;
+angle=acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
+if angle>=120
+    recenter(pos_body,vec_tail,vec,per,t,0,angle);
+end
 new_vec=vec*[cosd(24) sind(24); -sind(24) cosd(24)];
-angle=acosd(dot(new_vec,vec_tail)/(norm(new_vec)*norm(vec_tail)));
 pos_head=pos_body+new_vec;
-plot(pos_head(1),pos_head(2),'--xr');hold on;
-p=perception(arena,pos_head,con);
-per=cat(2,per,p);
+%plot(pos_head(1),pos_head(2),'--xr');hold on;
+per=cat(2,per,perception(pos_head,con));
+con=a(floor(pos_head(1)),floor(pos_head(2)));
 turn_terminate_base=2;
 t_turn_kernel=0;
 for i = 0:t_turn
@@ -18,25 +21,10 @@ r_turn_terminate=turn_terminate_base+t_turn_kernel;
 p_turn_terminate=r_turn_terminate*0.1;
 t=t+1;
 t_turn=t_turn+1;
-c=c+1;
 if rand<p_turn_terminate && angle > 37
-    run(arena,pos_body,pos_head,vec_tail,new_vec,con,per,0,0,0,0,t);
+    run(pos_body,pos_head,vec_tail,new_vec,con,per,0,0,0,0,t);
+else
+turnLeft(pos_body,pos_head,vec_tail,new_vec,con,per,t_turn,t);
 end
-else if c<=9
-    new_vec=vec*[cosd(-24) sind(-24); -sind(-24) cosd(-24)];
-    angle=acosd(dot(new_vec,vec_tail)/(norm(new_vec)*norm(vec_tail)));
-    pos_head=pos_body+new_vec;
-    plot(pos_head(1),pos_head(2),'--xr');hold on;
-    p=perception(arena,pos_head,con);
-    per=cat(2,per,p);
-    t=t+1;
-    t_turn=t_turn+1;
-    c=c+1;
-    turnLeft(arena,pos_body,pos_head,vec_tail,new_vec,con,per,c,t_turn,t);
-    else
-        turn(arena,pos_body,pos_head,vec_tail,vec,con,per,t_turn,t);
-    end
-end
-turnLeft(arena,pos_body,pos_head,vec_tail,new_vec,con,per,c,t_turn,t);
 end
 

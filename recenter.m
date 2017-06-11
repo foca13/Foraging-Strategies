@@ -1,4 +1,4 @@
-function [] = recenter (pos_body,vec_tail,vec,per,t_turn,t,s,angle)
+function [] = recenter (pos_body,vec_tail,vec,con,per,t_turn,t,s,angle)
 if s==0
     vec=vec*[cosd(angle) -sind(angle); sind(angle) cosd(angle)];
 else vec=vec*[cosd(angle) sind(angle); -sind(angle) cosd(angle)];

@@ -1,13 +1,14 @@
 function [] = turnRight(pos_body,pos_head,vec_tail,vec,con,per,t_turn,t)
 a=getGlobalx;
 angle=acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
+per=cat(2,per,perception(pos_head,con));
 if angle>=120
-    recenter(pos_body,vec_tail,vec,per,t_turn,t,1,angle);
+    recenter(pos_body,vec_tail,vec,con,per,t_turn,t,1,angle);
 end
 new_vec=vec*[cosd(24) -sind(24); sind(24) cosd(24)];
 pos_head=pos_body+new_vec;
-%plot(pos_head(1),pos_head(2),'--xr');hold on;
-per=cat(2,per,perception(pos_head,con));
+plot(pos_head(1),pos_head(2),'--xr'); hold on;
+
 con=a(floor(pos_head(1)),floor(pos_head(2)));
 turn_terminate_base=2;
 t_turn_kernel=0;

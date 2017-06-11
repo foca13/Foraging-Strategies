@@ -3,12 +3,15 @@ a=getGlobalx;
 if t_run<10
     pos_head=pos_head+0.1*vec;
     pos_body=pos_body+0.1*vec;
+    %if pos_head(1)>650
+    %    angle=acosd(dot(vec,[1 0])/(norm(vec)));
+    %end
     vec_tail=vec;
     per=cat(2,per,perception(pos_head,con));
     con=a(floor(pos_head(1)),floor(pos_head(2)));
     t=t+1;
     t_run=t_run+1;
-    %plot(pos_body(1),pos_body(2),'ob');hold on;
+    plot(pos_body(1),pos_body(2),'ob'); hold on;
     run(pos_body,pos_head,vec_tail,vec,con,per,w,t_w,s,t_run,t);
 end
 
@@ -72,7 +75,7 @@ end
 %     w=0;
 %     end
 % end
-%plot(pos_body(1),pos_body(2),'ob');hold on;
+plot(pos_body(1),pos_body(2),'ob');hold on;
 pos_head=pos_head+0.1*vec;
 pos_body=pos_body+0.1*vec;
 vec_tail=vec;

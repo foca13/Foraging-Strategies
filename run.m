@@ -3,9 +3,26 @@ a=getGlobalx;
 if t_run<10
     pos_head=pos_head+0.1*vec;
     pos_body=pos_body+0.1*vec;
-    %if pos_head(1)>650
-    %    angle=acosd(dot(vec,[1 0])/(norm(vec)));
-    %end
+    if pos_head(1)>=650
+        pos_head(1)=650;
+        pos_body(2)=pos_body(2)*(vec(2)/vec(2)*2);
+        pos_head(2)=pos_head(2)+(vec(2)/vec(2)*2);
+    end
+    if pos_head(1)<=0
+        pos_head(1)=0;
+        pos_body(2)=pos_body(2)+(vec(2)/vec(2)*2);
+        pos_head(2)=pos_head(2)+(vec(2)/vec(2)*2);
+    end
+    if pos_head(2)>=1000
+        pos_head(2)=1000;
+        pos_body(1)=pos_body(1)+(vec(1)/vec(1)*2);
+        pos_head(1)=pos_head(1)+(vec(1)/vec(1)*2);
+    end
+    if pos_head(2)<=0
+        pos_head(2)=0;
+        pos_body(1)=pos_body(1)+(vec(1)/vec(1)*2);
+        pos_head(1)=pos_head(1)+(vec(1)/vec(1)*2);
+    end
     vec_tail=vec;
     per=cat(2,per,perception(pos_head,con));
     con=a(floor(pos_head(1)),floor(pos_head(2)));
@@ -78,6 +95,38 @@ end
 plot(pos_body(1),pos_body(2),'ob');hold on;
 pos_head=pos_head+0.1*vec;
 pos_body=pos_body+0.1*vec;
+if pos_head(1)>=650
+    pos_head(1)=650;
+    pos_head(2)=pos_head(2)+(vec(2)/vec(2)*2);
+end
+if pos_head(1)<=1
+    pos_head(1)=1;
+    pos_head(2)=pos_head(2)+(vec(2)/vec(2)*2);
+end
+if pos_head(2)>=1000
+    pos_head(2)=1000;
+    pos_head(1)=pos_head(1)+(vec(1)/vec(1)*2);
+end
+if pos_head(2)<=1
+    pos_head(2)=1;
+    pos_head(1)=pos_head(1)+(vec(1)/vec(1)*2);
+end
+if pos_body(1)>=650
+    pos_body(1)=650;
+    pos_body(2)=pos_body(2)+(vec(2)/vec(2)*2);
+end
+if pos_body(1)<=1
+    pos_body(1)=1;
+    pos_body(2)=pos_body(2)+(vec(2)/vec(2)*2);
+end
+if pos_body(2)>=1000
+    pos_body(2)=1000;
+    pos_body(1)=pos_body(1)+(vec(1)/vec(1)*2);
+end
+if pos_body(2)<=1
+    pos_body(2)=1;
+    pos_body(1)=pos_body(1)+(vec(1)/vec(1)*2);
+end
 vec_tail=vec;
 per=cat(2,per,perception(pos_head,con));
 con=a(floor(pos_head(1)),floor(pos_head(2)));
@@ -94,8 +143,9 @@ p_run_terminate=r_run_terminate*0.1;
 t_run=t_run+1;
 t=t+1;
 %t
-
-if rand>p_run_terminate
+pos_head
+pos_body
+if rand>p_run_terminate && t_run<200
     run(pos_body,pos_head,vec_tail,vec,con,per,w,t_w,s,t_run,t);
 else turn(pos_body,pos_head,vec_tail,vec,con,per,0,t);
 %else turnLeft(pos_body,pos_head,pos_tail,vec,per,0,0,t);

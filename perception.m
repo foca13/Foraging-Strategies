@@ -14,5 +14,6 @@ end
 if y>1000
     y=1000;
 end
-p=(1/a(x,y))*(a(x,y)-prev_con);
+p=(1/a(x,y))*(a(x,y)-prev_con)*10;
+plot(p,'g'); hold on;
 end

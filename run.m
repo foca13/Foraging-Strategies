@@ -1,4 +1,4 @@
-function [] = run(pos_body,pos_head,vec_tail,vec,con,per,w,t_w,s,t_run,t)
+function [] = run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t)
 a=getGlobalx;
 if t_run<10
     pos_body=pos_body+0.1*vec;
@@ -25,11 +25,11 @@ if t_run<10
     end
     vec_tail=vec;
     per=cat(2,per,perception(pos_head,con));
-    con=a(floor(pos_head(1)),floor(pos_head(2)));
+    con=a(round(pos_head(1)),round(pos_head(2)));
     t=t+1;
     t_run=t_run+1;
     %plot(pos_body(1),pos_body(2),'ob'); hold on;
-    run(pos_body,pos_head,vec_tail,vec,con,per,w,t_w,s,t_run,t);
+    run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t);
 end
 if rand<0.1
     w=1;
@@ -62,22 +62,6 @@ if w == 1
 end
 pos_body=pos_body+0.1*vec;
 pos_head=pos_body+vec;
-if pos_head(1)>=650
-    pos_head(1)=650;
-    pos_head(2)=pos_head(2)+(vec(2)/vec(2)*2);
-end
-if pos_head(1)<=1
-    pos_head(1)=1;
-    pos_head(2)=pos_head(2)+(vec(2)/vec(2)*2);
-end
-if pos_head(2)>=1000
-    pos_head(2)=1000;
-    pos_head(1)=pos_head(1)+(vec(1)/vec(1)*2);
-end
-if pos_head(2)<=1
-    pos_head(2)=1;
-    pos_head(1)=pos_head(1)+(vec(1)/vec(1)*2);
-end
 if pos_body(1)>=650
     pos_body(1)=650;
     pos_body(2)=pos_body(2)+(vec(2)/vec(2)*2);
@@ -94,30 +78,46 @@ if pos_body(2)<=1
     pos_body(2)=1;
     pos_body(1)=pos_body(1)+(vec(1)/vec(1)*2);
 end
+if pos_head(1)>=650
+    pos_head(1)=650;
+    pos_head(2)=pos_head(2)+(vec(2)/vec(2)*2);
+end
+if pos_head(1)<=1
+    pos_head(1)=1;
+    pos_head(2)=pos_head(2)+(vec(2)/vec(2)*2);
+end
+if pos_head(2)>=1000
+    pos_head(2)=1000;
+    pos_head(1)=pos_head(1)+(vec(1)/vec(1)*2);
+end
+if pos_head(2)<=1
+    pos_head(2)=1;
+    pos_head(1)=pos_head(1)+(vec(1)/vec(1)*2);
+end
 %plot(pos_body(1),pos_body(2),'ob');hold on;
 vec_tail=vec;
 per=cat(2,per,perception(pos_head,con));
-con=a(floor(pos_head(1)),floor(pos_head(2)));
+con=a(round(pos_head(1)),round(pos_head(2)));
 run_terminate_base=0.148;
 t_run_kernel=0;
 weathervane_termination_base=2;
-    t_weathervane_kernel=0;
-    for i = 0:t_w
-        if i<=1
-            t_weathervane_kernel=t_weathervane_kernel+per(t-i+1)*85;
-        else if i<=10
-            t_weathervane_kernel=t_weathervane_kernel+per(t-i+1)*(-5);
-            end
+t_weathervane_kernel=0;
+for i = 0:t_w
+    if i<=1
+        t_weathervane_kernel=t_weathervane_kernel+per(t-i+1)*85;
+    else if i<=10
+        t_weathervane_kernel=t_weathervane_kernel+per(t-i+1)*(-5);
         end
     end
-    r_weathervane_terminate=weathervane_termination_base+t_weathervane_kernel;
-    p_weathervane_terminate=r_weathervane_terminate*0.1;
-    t_w=t_w+1;
-    if rand<p_weathervane_terminate
-    w=0;
-    t_w=0;
-    s=0;
-    end
+end
+r_weathervane_terminate=weathervane_termination_base+t_weathervane_kernel;
+p_weathervane_terminate=r_weathervane_terminate*0.1;
+t_w=t_w+1;
+if rand<p_weathervane_terminate
+w=0;
+t_w=0;
+s=0;
+end
 for i = 0:t_run
     t_run_kernel=t_run_kernel+per(t-i+1)*(-1+i/10);
     %plot_kernal(i+1)=(-1+i/10);
@@ -129,11 +129,15 @@ p_run_terminate=r_run_terminate*0.1;
 t_run=t_run+1;
 t=t+1;
 %t
-pos_head
-pos_body
+%pos_head
+%pos_body
+plot_per(t)=per(t);
+plot(plot_per,'.r');hold on;
+plot_con(t)=con;
+plot(plot_con,'.g');hold on;
 if rand>p_run_terminate && t_run<200
-    run(pos_body,pos_head,vec_tail,vec,con,per,w,t_w,s,t_run,t);
-else turn(pos_body,pos_head,vec_tail,vec,con,per,0,t);
+    run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t);
+else turn(pos_body,vec_tail,vec,con,per,0,t);
 %else turnLeft(pos_body,pos_head,pos_tail,vec,per,0,0,t);
 %else if rand<0.5
         %turnLeft(x,y,xVec,yVec,per(t),0);

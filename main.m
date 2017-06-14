@@ -7,5 +7,5 @@ x_head=x_body+x_vec; y_head=y_body+y_vec; pos_head=[x_head y_head];
 %turnLeft(pos_body,pos_head,vec,vec,initCon,0,0,0)
 arena=concentration(650,1000);
 setGlobalx(arena);
-init_con=arena(floor(pos_head(1)),floor(pos_head(2)));
-run(pos_body,pos_head,vec,vec,init_con,0,0,0,0,0,0);
+init_con=arena(round(pos_head(1)),round(pos_head(2)));
+run(pos_body,vec,vec,init_con,0,0,0,0,0,0);

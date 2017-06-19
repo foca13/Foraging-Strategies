@@ -1,4 +1,7 @@
 function [] = turnLeft(pos_body,vec_tail,vec,con,per,t_turn,t)
+if t>3000
+    error('program completed')
+end
 a=getGlobalx;
 angle=acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
 if angle>=120
@@ -9,7 +12,7 @@ pos_head=pos_body+vec;
 if pos_head(1)>=650 || pos_head(1)<=0 || pos_head(2)>=1000 || pos_head(2)<=0
     recenter(pos_body,vec_tail,vec,con,per,t_turn,t,1,angle);
 end
-%plot(pos_head(1),pos_head(2),'--xr'); hold on;
+plot(pos_head(1),pos_head(2),'--xr'); hold on;
 per=cat(2,per,perception(pos_head,con));
 pos_head
 con=a(round(pos_head(1)),round(pos_head(2)));
@@ -25,10 +28,10 @@ r_turn_terminate=turn_terminate_base+t_turn_kernel;
 p_turn_terminate=r_turn_terminate*0.1;
 t=t+1;
 t_turn=t_turn+1;
-plot_per(t)=per(t);
-plot(plot_per,'.r');hold on;
-plot_con(t)=con;
-plot(plot_con,'.g');hold on;
+% plot_per(t)=per(t);
+% plot(plot_per,'.r');hold on;
+% plot_con(t)=con;
+% plot(plot_con,'.g');hold on;
 if t>100
 %do nothing
 end

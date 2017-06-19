@@ -1,5 +1,8 @@
 function [] = run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t)
 a=getGlobalx;
+if t>3000
+    error('program completed')
+end
 if t_run<10
     pos_body=pos_body+0.1*vec;
     pos_head=pos_body+vec;
@@ -28,7 +31,7 @@ if t_run<10
     con=a(round(pos_head(1)),round(pos_head(2)));
     t=t+1;
     t_run=t_run+1;
-    %plot(pos_body(1),pos_body(2),'ob'); hold on;
+    plot(pos_body(1),pos_body(2),'ob'); hold on;
     run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t);
 end
 if rand<0.1
@@ -59,6 +62,8 @@ if w == 1
             end
          end
     end
+    pos_head=pos_body+vec;
+    plot(pos_head(1),pos_head(2),'--xr'); hold on;
 end
 pos_body=pos_body+0.1*vec;
 pos_head=pos_body+vec;
@@ -94,12 +99,10 @@ if pos_head(2)<=1
     pos_head(2)=1;
     pos_head(1)=pos_head(1)+(vec(1)/vec(1)*2);
 end
-%plot(pos_body(1),pos_body(2),'ob');hold on;
+plot(pos_body(1),pos_body(2),'ob');hold on;
 vec_tail=vec;
 per=cat(2,per,perception(pos_head,con));
 con=a(round(pos_head(1)),round(pos_head(2)));
-run_terminate_base=0.148;
-t_run_kernel=0;
 weathervane_termination_base=2;
 t_weathervane_kernel=0;
 for i = 0:t_w
@@ -118,8 +121,11 @@ w=0;
 t_w=0;
 s=0;
 end
+run_terminate_base=0.148;
+t_run_kernel=0;
 for i = 0:t_run
     t_run_kernel=t_run_kernel+per(t-i+1)*(-1+i/10);
+    %p=per(t-i+1);
     %plot_kernal(i+1)=(-1+i/10);
 end
 r_run_terminate=run_terminate_base+t_run_kernel;
@@ -131,13 +137,27 @@ t=t+1;
 %t
 %pos_head
 %pos_body
-plot_per(t)=per(t);
-plot(plot_per,'.r');hold on;
-plot_con(t)=con;
-plot(plot_con,'.g');hold on;
+%plot_per(t)=per(t);
+%plot(plot_per,'.r');hold on;
+%plot_con(t)=con;
+%plot(plot_con,'.g');hold on;
 if rand>p_run_terminate && t_run<200
     run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t);
-else turn(pos_body,vec_tail,vec,con,per,0,t);
+else
+    if (vec(1)*vec_tail(2)-vec(2)*vec_tail(1))<0
+        angle=-angle;
+    end
+    if abs(angle)<5
+        angle=0;
+    end
+    if angle>0
+        turnRight(pos_body,vec_tail,vec,con,per,0,t);
+    else if angle<0
+            turnLeft(pos_body,vec_tail,vec,con,per,0,t);
+        else
+            turn(pos_body,vec_tail,vec,con,per,0,t);
+        end
+    end
 %else turnLeft(pos_body,pos_head,pos_tail,vec,per,0,0,t);
 %else if rand<0.5
         %turnLeft(x,y,xVec,yVec,per(t),0);

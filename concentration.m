@@ -9,5 +9,3 @@ end
 %contour(arena);
 %plot(X/2,Y/2,'g^');hold on ; axis([0 X 0 Y]);hold on;
 end
-
-%contour(arena(i,j)(:,1));

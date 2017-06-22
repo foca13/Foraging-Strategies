@@ -1,9 +1,51 @@
-function [] = recenter (pos_body,vec_tail,vec,per,t_turn,t,s,angle)
+function [] = recenter (pos_body,vec_tail,vec,con,per,t_turn,t,s,angle,d,time,r)
+a=getGlobalx;
 if s==0
-    vec=vec*[cosd(angle) -sind(angle); sind(angle) cosd(angle)];
-else vec=vec*[cosd(angle) sind(angle); -sind(angle) cosd(angle)];
+    for i = 0:5
+        vec=vec*[cosd(angle/5) -sind(angle/5); sind(angle/5) cosd(angle/5)];
+        pos_head=pos_body+vec;
+        if pos_head(1)>=650
+            pos_head(1)=650;
+        end
+        if pos_head(1)<=1
+            pos_head(1)=1;
+        end
+        if pos_head(2)>=1000
+            pos_head(2)=1000;
+        end
+        if pos_head(2)<=1
+            pos_head(2)=1;
+        end
+        per=cat(2,per,perception(pos_head,con));
+        con=a(round(pos_head(1)),round(pos_head(2)));
+        distance=sqrt((pos_head(1)-325)^2+(pos_head(2)-500)^2);
+        if i
+        d=cat(2,d,distance);
+        t=t+1;
+        t_turn=t_turn+1;
+    end
+else for i = 0:5
+        vec=vec*[cosd(angle/5) sind(angle/5); -sind(angle/5) cosd(angle/5)];
+        pos_head=pos_body+vec;
+        if pos_head(1)>=650
+            pos_head(1)=650;
+        end
+        if pos_head(1)<=1
+            pos_head(1)=1;
+        end
+        if pos_head(2)>=1000
+            pos_head(2)=1000;
+        end
+        if pos_head(2)<=1
+            pos_head(2)=1;
+        end
+        per=cat(2,per,perception(pos_head,con));
+        con=a(round(pos_head(1)),round(pos_head(2)));
+        distance=sqrt((pos_head(1)-325)^2+(pos_head(2)-500)^2);
+        d=cat(2,d,distance);
+        t=t+1;
+        t_turn=t_turn+1;
+    end
 end
-pos_head=pos_body+vec;
-t=t+1;
-turn(pos_body,pos_head,vec_tail,vec,con,per,t_turn,t)
+turn(pos_body,vec_tail,vec,con,per,t_turn,t,d,time,r)
 end

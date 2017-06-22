@@ -1,5 +1,4 @@
-function r = getGlobalx
+function r=getGlobalx
 global x
 r=x;
 end
-

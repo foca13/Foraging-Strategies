@@ -36,9 +36,7 @@ p_turn_terminate=r_turn_terminate;
 t=t+1;
 t_turn=t_turn+1;
 distance=sqrt((pos_head(1)-325)^2+(pos_head(2)-500)^2);
-if t_turn>1&&t_turn~=11&&t_turn~=21&&t_turn~=31&&t_turn~=41&&t_turn~=51&&t_turn~=61&&t_turn~=71
 d=cat(2,d,distance);
-end
 %plot(t,distance,'og'); hold on;
 if rand<p_turn_terminate && angle > 37
     run(pos_body,vec_tail,vec,con,per,0,0,0,0,t,d,time,r);

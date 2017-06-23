@@ -1,4 +1,15 @@
 function [] = recenter (pos_body,vec_tail,vec,con,per,t_turn,t,s,angle,d,time,r)
+if t>time
+    setGlobaly(d)
+    setGlobalz(false)
+    r=r+1;
+    num_sim=getGlobalv;
+    matrix=getGlobaln;
+    if r==1
+        matrix=d;
+    end
+    main(matrix,num_sim,time,r)
+end
 a=getGlobalx;
 if s==0
     for i = 1:5
@@ -19,6 +30,9 @@ if s==0
         per=cat(2,per,perception(pos_head,con));
         con=a(round(pos_head(1)),round(pos_head(2)));
         distance=sqrt((pos_head(1)-325)^2+(pos_head(2)-500)^2);
+%         if t>1200
+%             %stop here
+%         end
         d=cat(2,d,distance);
         t=t+1;
         t_turn=t_turn+1;
@@ -41,6 +55,9 @@ else for i = 1:5
         per=cat(2,per,perception(pos_head,con));
         con=a(round(pos_head(1)),round(pos_head(2)));
         distance=sqrt((pos_head(1)-325)^2+(pos_head(2)-500)^2);
+%         if t>1200
+%             %stop here
+%         end
         d=cat(2,d,distance);
         t=t+1;
         t_turn=t_turn+1;

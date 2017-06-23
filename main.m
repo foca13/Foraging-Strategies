@@ -1,7 +1,7 @@
 function main(matrix,num_sim,time,r)
 setGlobaln(matrix)
-setGlobalw(false)
 if r>num_sim
+    setGlobalw(false)
     subroutine
 end
 z=getGlobalz;

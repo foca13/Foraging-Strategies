@@ -1,11 +1,18 @@
 matrix=[];
-num_sim=setGlobalv(20);
-
+num_sim=10;
+setGlobalv(num_sim);
+w=getGlobalw;
+if w==true
 main(matrix,num_sim,1200,0)
-    setGlobalz(true);
-    distance=main(1200);
-    matrix=cat(1,matrix,distance);
-matrix
-for j=0:1
-    %do nothing
 end
+matrix=getGlobaln;
+avg_distance=[];
+for i=1:size(matrix,2)
+    sum=0;
+    for j=1:size(matrix,1)
+        sum=sum+matrix(i,j);
+    end
+    avg_dicat(2,avg_distance,(sum/num_sim));
+end
+avg_distance
+error('I am done in a lazy way');

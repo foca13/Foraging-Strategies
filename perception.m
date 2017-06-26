@@ -14,8 +14,6 @@ end
 if y>1000
     y=1000;
 end
-x
-y
 p=((a(x,y))-prev_con)/(a(x,y));
 %plot(p,'g');
 end

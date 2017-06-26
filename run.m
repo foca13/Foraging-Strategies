@@ -1,4 +1,6 @@
 function [] = run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t,d,time,r)
+loop=0;
+while loop==0
 if t>time
     setGlobaly(d)
     setGlobalz(false)
@@ -8,6 +10,7 @@ if t>time
     if r==1
         matrix=d;
     end
+    clearvars -except matrix num_sim time r;
     main(matrix,num_sim,time,r)
 end
 a=getGlobalx;
@@ -87,7 +90,7 @@ if pos_head(2)>1000||pos_head(2)<1
         end
     end
 end
-plot(pos_body(1),pos_body(2),'ob');hold on;
+%plot(pos_body(1),pos_body(2),'ob');hold on;
 vec_tail=vec;
 per=cat(2,per,perception(pos_head,con));
 con=a(round(pos_head(1)),round(pos_head(2)));
@@ -122,7 +125,7 @@ distance=sqrt((pos_head(1)-325)^2+(pos_head(2)-500)^2);
 d=cat(2,d,distance);
 %plot(t,distance,'og'); hold on;
 if rand>p_run_terminate || t_run<10
-    run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t,d,time,r);
+    %run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t,d,time,r);
 else
     if (vec(1)*vec_tail(2)-vec(2)*vec_tail(1))<0
         angle=-angle;
@@ -138,5 +141,6 @@ else
             turn(pos_body,vec_tail,vec,con,per,0,t,d,time,r);
         end
     end
+end
 end
 end

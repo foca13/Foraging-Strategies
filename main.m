@@ -1,6 +1,6 @@
 function main(matrix,num_sim,time,r)
 setGlobaln(matrix)
-if r>num_sim
+if r>=num_sim
     setGlobalw(false)
     subroutine
 end

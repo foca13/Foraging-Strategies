@@ -1,18 +1,4 @@
-function [] = run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t,d,time,r)
-loop=0;
-while loop==0
-if t>time
-    setGlobaly(d)
-    setGlobalz(false)
-    r=r+1;
-    num_sim=getGlobalv;
-    matrix=getGlobaln;
-    if r==1
-        matrix=d;
-    end
-    clearvars -except matrix num_sim time r;
-    main(matrix,num_sim,time,r)
-end
+function [] = run(pos_body,vec_tail,vec,con,per,t_run,w,t_w,s,t)
 a=getGlobalx;
 angle=acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
 if rand<0.1
@@ -120,13 +106,10 @@ end
 r_run_terminate=run_terminate_base+t_run_kernel;
 p_run_terminate=r_run_terminate;
 t_run=t_run+1;
-t=t+1;
-distance=sqrt((pos_head(1)-325)^2+(pos_head(2)-500)^2);
-d=cat(2,d,distance);
+setGlobaly(per)
+setGlobalv(pos_body,pos_head,vec_tail,vec,con,t_run,w,t_w,s,0,angle,0)
 %plot(t,distance,'og'); hold on;
-if rand>p_run_terminate || t_run<10
-    %run(pos_body,vec_tail,vec,con,per,w,t_w,s,t_run,t,d,time,r);
-else
+if rand<p_run_terminate && t_run>10
     if (vec(1)*vec_tail(2)-vec(2)*vec_tail(1))<0
         angle=-angle;
     end
@@ -134,13 +117,15 @@ else
         angle=0;
     end
     if angle>0
-        turnRight(pos_body,vec_tail,vec,con,per,0,t,d,time,r);
+        setGlobalz(2)
+        %turnRight
     else if angle<0
-            turnLeft(pos_body,vec_tail,vec,con,per,0,t,d,time,r);
+            setGlobalz(1)
+            %turnLeft
         else
-            turn(pos_body,vec_tail,vec,con,per,0,t,d,time,r);
+            setGlobalz(4)
+            %turn
         end
     end
-end
 end
 end

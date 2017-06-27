@@ -1,5 +1,5 @@
-function [] = turn (pos_body,vec_tail,vec,con,per,t_turn,t,d,time,r)
+function turn
 if rand<0.5
-    turnLeft(pos_body,vec_tail,vec,con,per,t_turn,t,d,time,r)
-else turnRight(pos_body,vec_tail,vec,con,per,t_turn,t,d,time,r)
+    setGlogalz(1)
+else setGlobalz(2)
 end

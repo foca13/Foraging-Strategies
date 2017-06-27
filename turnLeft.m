@@ -1,29 +1,33 @@
-function [] = turnLeft(pos_body,vec_tail,vec,con,per,t_turn,t,d,time,r)
-loop=0;
-while loop==0
-if t>time
-    setGlobaly(d)
-    setGlobalz(false)
-    r=r+1;
-    num_sim=getGlobalv;
-    matrix=getGlobaln;
-    if r==1
-        matrix=d;
-    end
-    clearvars -except matrix num_sim time r;
-    main(matrix,num_sim,time,r)
-end
+function [] = turnLeft(pos_body,vec_tail,vec,con,per,t_turn,t)
+check=0;
 a=getGlobalx;
 angle=acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
 if angle>119
-    %t=t+1;
-    recenter(pos_body,vec_tail,vec,con,per,t_turn,t,0,angle,d,time,r);
+    setGlobalz(3);
+    check=3;
 end
 vec=vec*[cosd(24) sind(24); -sind(24) cosd(24)];
 pos_head=pos_body+vec;
-if pos_head(1)>=650 || pos_head(1)<=0 || pos_head(2)>=1000 || pos_head(2)<=0
-    %t=t+1;
-    recenter(pos_body,vec_tail,vec,con,per,t_turn,t,1,angle,d,time,r);
+if pos_head(1)>=650 || pos_head(1)<=1 || pos_head(2)>=1000 || pos_head(2)<=1
+    setGlobalz(3);
+    check=3;
+    
+    if pos_head(1)>650
+        pos_head(1)=650;
+        pos_body(1)=650;
+    else if pos_head(1)<1
+          pos_head(1)=1;
+          pos_body(1)=1;
+         end
+    end
+     if pos_head(2)>1000
+        pos_head(2)=1000;
+        pos_body(2)=1000;
+    else if pos_head(2)<1
+          pos_head(2)=1;
+          pos_body(2)=1;
+         end
+    end
 end
 %plot(pos_head(1),pos_head(2),'--xr'); hold on;
 per=cat(2,per,perception(pos_head,con));
@@ -38,16 +42,10 @@ for i = 0:t_turn
 end
 r_turn_terminate=turn_terminate_base+t_turn_kernel;
 p_turn_terminate=r_turn_terminate;
-t=t+1;
 t_turn=t_turn+1;
-distance=sqrt((pos_head(1)-325)^2+(pos_head(2)-500)^2);
-d=cat(2,d,distance);
-%plot(t,distance,'og'); hold on;
-if rand<p_turn_terminate && angle > 37
-    run(pos_body,vec_tail,vec,con,per,0,0,0,0,t,d,time,r);
-
-%turnLeft(pos_body,vec_tail,vec,con,per,t_turn,t,d,time,r);
+setGlobaly(per);
+setGlobalv(pos_body,pos_head,vec_tail,vec,con,0,0,0,0,t_turn,angle,0);
+if rand<p_turn_terminate && angle > 37 && check ~= 3
+    setGlobalz(0);
 end
-end
-
 end

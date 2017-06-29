@@ -1,22 +1,13 @@
+function [d] = subroutine (R,T,W)
 matrix=[];
-num_sim=50;
-sim_length=1250;
+num_sim=200;
+sim_length=1200;
 for i=1:num_sim
-    main(sim_length)
-    if i==1
-        matrix=getGlobaln;
-    else
+    main(sim_length,R,T,W)
     matrix=cat(1,matrix,getGlobaln);
-    end
 end
 avg=mean(matrix);
-%dev=std(matrix);
-% for i=1:size(matrix,2)
-%     sum=0;
-%     for j=1:size(matrix,1)
-%         sum=sum+matrix(j,i);
-%     end
-%     avg_distance=cat(2,avg_distance,(sum/num_sim));
-% end
+avg_d=mean(avg);
+d=avg(1201);
 plot(avg); hold on;
-%plot(dev);
+end

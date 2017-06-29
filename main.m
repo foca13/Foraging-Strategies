@@ -1,7 +1,8 @@
-function main(time)
+function main(time,R,T,W)
 d=[];
 rng shuffle;
-x_body=rand*630; y_body=rand*980; pos_body=[x_body y_body];
+startX=rand*120;
+x_body=325+startX; y_body=500+sqrt(14400-startX^2); pos_body=[x_body y_body];
 x_vec=rand*20; y_vec=sqrt(400-x_vec^2); vec=[x_vec y_vec];
 x_head=x_body+x_vec; y_head=y_body+y_vec; pos_head=[x_head y_head];
 arena=concentration(650,1000);
@@ -29,17 +30,19 @@ while t<=time
     z=getGlobalz;
     if z==4
         if rand<0.5
+            setGlobalz(1);
             z=1;
-        else z=2;
+        else setGlobalz(2);
+            z=2;
         end
     end
     switch z
         case 0
-            run(pos_body,vec_tail,vec,con,per,t_run,w,t_w,s,t)
+            run(pos_body,vec_tail,vec,con,per,t_run,w,t_w,s,t,R,W)
         case 1
-            turnLeft(pos_body,vec_tail,vec,con,per,t_turn,t)
+            turnLeft(pos_body,vec_tail,vec,con,per,t_turn,t,T)
         case 2
-            turnRight(pos_body,vec_tail,vec,con,per,t_turn,t)
+            turnRight(pos_body,vec_tail,vec,con,per,t_turn,t,T)
         case 3
             recenter(pos_body,vec_tail,vec,con,per,s,t_turn,angle,t_r)
     end

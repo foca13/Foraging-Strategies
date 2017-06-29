@@ -1,4 +1,4 @@
-function [] = turnLeft(pos_body,vec_tail,vec,con,per,t_turn,t)
+function [] = turnLeft(pos_body,vec_tail,vec,con,per,t_turn,t,T)
 check=0;
 a=getGlobalx;
 angle=acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
@@ -11,7 +11,6 @@ pos_head=pos_body+vec;
 if pos_head(1)>=650 || pos_head(1)<=1 || pos_head(2)>=1000 || pos_head(2)<=1
     setGlobalz(3);
     check=3;
-    
     if pos_head(1)>650
         pos_head(1)=650;
         pos_body(1)=650;
@@ -40,7 +39,7 @@ for i = 0:t_turn
     end
     %plot_kernal(i+1)=(150-30*i);
 end
-r_turn_terminate=turn_terminate_base+t_turn_kernel;
+r_turn_terminate=turn_terminate_base+t_turn_kernel*T;
 p_turn_terminate=r_turn_terminate;
 t_turn=t_turn+1;
 setGlobaly(per);

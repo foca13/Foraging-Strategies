@@ -1,4 +1,4 @@
-function [] = run(pos_body,vec_tail,vec,con,per,t_run,w,t_w,s,t)
+function [] = run(pos_body,vec_tail,vec,con,per,t_run,w,t_w,s,t,R,W)
 a=getGlobalx;
 angle=acosd(dot(vec,vec_tail)/(norm(vec)*norm(vec_tail)));
 if rand<0.1
@@ -90,7 +90,7 @@ for i = 0:t_w
         end
     end
 end
-r_weathervane_terminate=weathervane_termination_base+t_weathervane_kernel;
+r_weathervane_terminate=weathervane_termination_base+t_weathervane_kernel*W;
 p_weathervane_terminate=r_weathervane_terminate*0.1;
 t_w=t_w+1;
 if rand<p_weathervane_terminate
@@ -103,7 +103,7 @@ t_run_kernel=0;
 for i = 0:t_run
     t_run_kernel=t_run_kernel+per(t-i+1)*(-1+i/100);
 end
-r_run_terminate=run_terminate_base+t_run_kernel;
+r_run_terminate=run_terminate_base+t_run_kernel*R;
 p_run_terminate=r_run_terminate;
 t_run=t_run+1;
 setGlobaly(per)

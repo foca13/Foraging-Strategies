@@ -1,9 +1,9 @@
-function [arena] = concentration(X,Y)
+ function [arena] = concentration(X,Y)
 arena=zeros(X,Y);
 for i = 1:X
     for j = 1:Y
         distance=sqrt((i-(X/2))^2+((j-Y/2))^2);
-        arena(i,j)=exp(-(distance^2)/(2*10000));
+        arena(i,j)=exp(-(distance^2)/(2*20000));
     end
 end
 %contour(arena);

@@ -40,7 +40,7 @@ for i = 0:t_turn
     %plot_kernal(i+1)=(150-30*i);
 end
 r_turn_terminate=turn_terminate_base+t_turn_kernel*T;
-p_turn_terminate=r_turn_terminate;
+p_turn_terminate=r_turn_terminate*0.1;
 t_turn=t_turn+1;
 setGlobaly(per);
 setGlobalv(pos_body,pos_head,vec_tail,vec,con,0,0,0,1,t_turn,angle,0)

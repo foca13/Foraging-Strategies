@@ -104,7 +104,7 @@ for i = 0:t_run
     t_run_kernel=t_run_kernel+per(t-i+1)*(-1+i/100);
 end
 r_run_terminate=run_terminate_base+t_run_kernel*R;
-p_run_terminate=r_run_terminate;
+p_run_terminate=r_run_terminate*0.1;
 t_run=t_run+1;
 setGlobaly(per)
 setGlobalv(pos_body,pos_head,vec_tail,vec,con,t_run,w,t_w,s,0,angle,0)

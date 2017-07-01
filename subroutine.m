@@ -1,6 +1,6 @@
 function [d] = subroutine (R,T,W)
 matrix=[];
-num_sim=200;
+num_sim=50;
 sim_length=1200;
 for i=1:num_sim
     main(sim_length,R,T,W)
@@ -8,6 +8,6 @@ for i=1:num_sim
 end
 avg=mean(matrix);
 avg_d=mean(avg);
-d=avg(1201);
-plot(avg); hold on;
+d=avg(sim_length+1);
+%plot(avg); hold on;
 end

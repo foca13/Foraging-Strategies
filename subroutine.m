@@ -1,13 +1,11 @@
-function [d] = subroutine (R,T,W)
+function [d] = subroutine (R,T,W,num_sim,sim_length)
 matrix=[];
-num_sim=50;
-sim_length=1200;
 for i=1:num_sim
-    main(sim_length,R,T,W)
-    matrix=cat(1,matrix,getGlobaln);
+    distance=main(R,T,W,sim_length);
+    matrix=cat(1,matrix,distance);
 end
 avg=mean(matrix);
-avg_d=mean(avg);
-d=avg(sim_length+1);
+d=mean(avg);
+%d=avg(sim_length+1);
 %plot(avg); hold on;
 end

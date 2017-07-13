@@ -14,6 +14,8 @@ end
 if y>1000
     y=1000;
 end
+x=round(x);
+y=round(y);
 p=((a(x,y))-prev_con)/(a(x,y));
 %plot(p,'g');
 end

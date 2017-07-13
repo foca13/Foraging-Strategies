@@ -35,16 +35,17 @@ turn_terminate_base=2;
 t_turn_kernel=0;
 for i = 0:t_turn
     if i<=5
-    t_turn_kernel=(t_turn_kernel+per(t-i+1)*((150-30*i)));
+    t_turn_kernel=t_turn_kernel+per(t-i+1)*((150-30*i));
     end
     %plot_kernal(i+1)=(150-30*i);
 end
-r_turn_terminate=turn_terminate_base+t_turn_kernel*T;
-p_turn_terminate=r_turn_terminate*0.1;
+p_turn_terminate=(turn_terminate_base+t_turn_kernel*T)*0.1; %calculate the probability of terminating a turn
 t_turn=t_turn+1;
 setGlobaly(per);
 setGlobalv(pos_body,pos_head,vec_tail,vec,con,0,0,0,1,t_turn,angle,0)
 if rand<p_turn_terminate && angle > 37 && check ~=3
+    vec_tail=vec;
+    setGlobalv(pos_body,pos_head,vec_tail,vec,con,0,0,0,0,t_turn,angle,0);
     setGlobalz(0);
 end
 end

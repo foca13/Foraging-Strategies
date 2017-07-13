@@ -1,8 +1,10 @@
-function main(time,R,T,W)
+function [d] = main(R,T,W,time)
 d=[];
 rng shuffle;
-startX=rand*120;
-x_body=325+startX; y_body=500+sqrt(14400-startX^2); pos_body=[x_body y_body];
+%plot(325,500,'og'); hold on; 
+startX=rand*120; x_body=325+startX; y_body=500+sqrt(14400-startX^2); 
+%x_body=21+rand*609; y_body=21+rand*959;
+pos_body=[x_body y_body];
 x_vec=rand*20; y_vec=sqrt(400-x_vec^2); vec=[x_vec y_vec];
 x_head=x_body+x_vec; y_head=y_body+y_vec; pos_head=[x_head y_head];
 arena=concentration(650,1000);
@@ -51,6 +53,9 @@ while t<=time
     distance=sqrt(abs((pos_head(1)-325)^2+(pos_head(2)-500)^2));
     d=cat(2,d,distance);
     t=t+1;
+    if distance<60
+        lel=lel;
+    end
 end
-setGlobaln(d)
+%setGlobaln(d)
 end
